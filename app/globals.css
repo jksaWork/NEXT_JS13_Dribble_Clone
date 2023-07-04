@@ -130,7 +130,7 @@ body {
 
 /* Navbar */
 .navbar {
-  @apply py-5 px-8 border-b border-nav-border gap-4;
+  @apply py-3 px-2 sm:py-5 sm:px-8 border-b border-nav-border gap-4;
 }
 
 /* Profile Menu */

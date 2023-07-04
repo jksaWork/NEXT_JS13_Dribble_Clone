@@ -5,6 +5,7 @@ import Image from "next/image";
 import { NavLinks } from "@/constants";
 import AuthProviders from "./AuthProviders";
 import { getServerComponents } from "@/lib/session";
+import { UserSelection } from ".";
 // import { unstable_getServerSession } from "next-auth";
 // import { Link } from "next/navigation";
 
@@ -27,10 +28,10 @@ async function Navbar() {
       <div className="flex-center">
         {seesion ? (
           <div>
-            User Proile Image
-            <Link href="/create-project" className="capitalize">
-              create Work
-            </Link>
+            <UserSelection
+              image={seesion?.user?.avatarUrl}
+              title={seesion?.user?.name}
+            />
           </div>
         ) : (
           <AuthProviders />
