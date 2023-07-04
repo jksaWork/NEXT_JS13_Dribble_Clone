@@ -4,10 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import AuthProviders from "./AuthProviders";
+import { getServerComponents } from "@/lib/session";
 // import { unstable_getServerSession } from "next-auth";
 // import { Link } from "next/navigation";
-function Navbar() {
-  const seesion = null;
+
+async function Navbar() {
+  const seesion = await getServerComponents();
+  console.log(seesion);
   return (
     <div className="flexBetween navbar">
       <Link href="/">

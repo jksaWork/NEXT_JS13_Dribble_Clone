@@ -40,37 +40,51 @@ import { g, auth, config } from "@grafbase/sdk";
 //   // https://grafbase.com/docs/edge-gateway/resolvers
 //   // gravatar: g.url().resolver('user/gravatar')
 // })
-export const User = g.model("User", {
-  name: g.string().length({ min: 4, max: 20 }),
-  email: g.string().unique(),
-  avatarUrl: g.url(),
-  description: g.string().optional(),
-  githubUrl: g.url().optional(),
-  linkedinUrl: g.url().optional(),
-  projects: g
-    .relation(() => Projects)
-    .list()
-    .optional(),
-});
-
-export const Projects = g.model("Projects", {
-  title: g.string(),
-  description: g.string(),
-  image: g.url(),
-  githubUrl: g.url(),
-  livesite: g.url(),
-  category: g.string().search(),
-  createdBy: g.relation(() => User),
+// @ts-ignore
+export const User = g
+  .model("User", {
+    name: g.string().length({ min: 4, max: 20 }),
+    email: g.string().unique(),
+    avatarUrl: g.url(),
+    description: g.string().optional(),
+    githubUrl: g.url().optional(),
+    linkedinUrl: g.url().optional(),
+    projects: g
+      .relation(() => Projects)
+      .list()
+      .optional(),
+  })
+  .auth((roles) => {
+    roles.public().read();
+  });
+// @ts-ignore
+export const Projects = g
+  .model("Projects", {
+    title: g.string(),
+    description: g.string(),
+    image: g.url(),
+    githubUrl: g.url(),
+    livesite: g.url(),
+    category: g.string().search(),
+    createdBy: g.relation(() => User),
+  })
+  .auth((roles) => {
+    roles.public().read();
+    roles.private().create().update();
+  });
+const Jwt = auth.JWT({
+  issuer: "grafbase",
+  secret: g.env("NEXTAUTH_SECRET"),
 });
 
 export default config({
   schema: g,
   // Integrate Auth
   // https://grafbase.com/docs/auth
-  // auth: {
-  //   providers: [authProvider],
-  //   rules: (rules) => {
-  //     rules.private()
-  //   }
-  // }
+  auth: {
+    providers: [Jwt],
+    rules: (rules) => {
+      rules.private();
+    },
+  },
 });
