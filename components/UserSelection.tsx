@@ -3,7 +3,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import { Fragment } from "react";
-
+import { Link } from "next/navigation";
 interface UserSelectionItemsProps {
   name: string;
   href: string;
@@ -77,7 +77,7 @@ export default function UserSelection({
                   </div>
                   <div className="relative grid gap-8 bg-white px-2 py-5  ">
                     {solutions.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         onClick={() => item.callback! && item.callback()}
@@ -88,7 +88,7 @@ export default function UserSelection({
                             {item.name}
                           </p>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>

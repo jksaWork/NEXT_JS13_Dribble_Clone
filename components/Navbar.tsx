@@ -11,7 +11,7 @@ import { UserSelection } from ".";
 
 async function Navbar() {
   const seesion = await getServerComponents();
-  console.log(seesion);
+  // console.log(seesion);
   return (
     <div className="flexBetween navbar">
       <Link href="/">

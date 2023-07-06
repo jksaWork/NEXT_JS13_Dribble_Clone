@@ -30,3 +30,18 @@ export const createuserMutation = () => {
     }
   `;
 };
+export const createProjectMutation = `
+	mutation CreateProject($input: ProjectsCreateInput!) {
+		projectsCreate(input: $input) {
+			projects {
+				id
+				title
+				description
+				createdBy {
+					email
+					name
+				}
+			}
+		}
+	}
+`;

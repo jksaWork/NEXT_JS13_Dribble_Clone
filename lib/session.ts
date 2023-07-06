@@ -47,6 +47,7 @@ export const AuthOption: NextAuthOptions = {
             ...session.user,
             ...data.user,
           },
+          accessToken: token.accessToken,
         };
       } catch (e) {
         console.log("Error When Retirving Data" + e);
@@ -82,6 +83,10 @@ export const AuthOption: NextAuthOptions = {
 };
 
 export const getServerComponents = async () => {
-  const session = (await getServerSession(AuthOption)) as SessionInterface;
-  return session;
+  try {
+    const session = (await getServerSession(AuthOption)) as SessionInterface;
+    return session;
+  } catch (error) {
+    return null;
+  }
 };
