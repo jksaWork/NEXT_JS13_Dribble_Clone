@@ -2,9 +2,9 @@ import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 
 cloudinary.config({
-  cloud_name: "dmlxgat17",
-  api_key: "695878523419342",
-  api_secret: "Zp0J-tx9BNyrUP-Yd5jYZjujF50",
+  cloud_name: process.env.COLUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECREAT,
 });
 
 // NextRequest

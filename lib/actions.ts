@@ -3,6 +3,7 @@ import {
   getuserquery,
   createProjectMutation,
   createuserMutation,
+  fetchprojectquery,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -73,7 +74,7 @@ export const CreateProjectAction = async (
   console.log(imageUrl, form);
   if (imageUrl.url) {
     client.setHeader("Authorization", `Bearer ${token}`);
-
+    console.log(imageUrl.url);
     const variables = {
       input: {
         ...form,
@@ -86,4 +87,9 @@ export const CreateProjectAction = async (
 
     return MakeGraphQLClientRequest(createProjectMutation, variables);
   }
+};
+
+export const fetchAllProjects = (category?: string) => {
+  const variables = {};
+  return MakeGraphQLClientRequest(fetchprojectquery, variables);
 };

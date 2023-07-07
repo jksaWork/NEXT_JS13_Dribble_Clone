@@ -45,3 +45,33 @@ export const createProjectMutation = `
 		}
 	}
 `;
+
+export const fetchprojectquery = `
+  query getProjects($category: String, $endcursor: String) {
+    projectsSearch(first: 10, after: $endcursor, filter: {category: {eq: $category}}) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          title
+          githubUrl
+          description
+          livesite
+          id
+          image
+          category
+          createdBy {
+            id
+            email
+            name
+            avatarUrl
+          }
+        }
+      }
+    }
+  }
+`;
