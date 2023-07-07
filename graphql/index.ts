@@ -75,3 +75,45 @@ export const fetchprojectquery = `
     }
   }
 `;
+
+export const fetchprojectDetailsquery = `
+query GetProjectById($id: ID!) {
+  projects(by: { id: $id }) {
+    id
+    title
+    description
+    image
+    livesite
+    githubUrl
+    category
+    createdBy {
+      id
+      name
+      email
+      avatarUrl
+    }
+  }
+}`;
+
+export const fetchprofileData = `
+query getUserProjects($id: ID!, $last: Int = 4) {
+  user(by: { id: $id }) {
+    id
+    name
+    email
+    description
+    avatarUrl
+    githubUrl
+    linkedinUrl
+    projects(last: $last) {
+      edges {
+        node {
+          id
+          title
+          image
+        }
+      }
+    }
+  }
+}
+`;

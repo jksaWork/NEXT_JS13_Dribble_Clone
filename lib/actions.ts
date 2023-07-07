@@ -4,6 +4,8 @@ import {
   createProjectMutation,
   createuserMutation,
   fetchprojectquery,
+  fetchprojectDetailsquery,
+  fetchprofileData,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -92,4 +94,12 @@ export const CreateProjectAction = async (
 export const fetchAllProjects = (category?: string) => {
   const variables = {};
   return MakeGraphQLClientRequest(fetchprojectquery, variables);
+};
+
+export const getPorjcetDetails = (id: string) => {
+  return MakeGraphQLClientRequest(fetchprojectDetailsquery, { id });
+};
+
+export const getUserProjects = (id: string) => {
+  return MakeGraphQLClientRequest(fetchprofileData, { id });
 };
