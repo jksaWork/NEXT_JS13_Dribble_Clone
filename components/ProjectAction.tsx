@@ -21,7 +21,7 @@ const ProjectActions = ({ projectId }: Props) => {
     const { token } = await fetchUserToken();
 
     try {
-      await deleteProject(projectId, token);
+      await deleteProject(projectId);
 
       router.push("/");
     } catch (error) {

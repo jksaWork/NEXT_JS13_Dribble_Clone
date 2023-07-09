@@ -3,7 +3,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import { Fragment } from "react";
-import { Link } from "next/navigation";
+import Link  from "next/link";
 interface UserSelectionItemsProps {
   name: string;
   href: string;
