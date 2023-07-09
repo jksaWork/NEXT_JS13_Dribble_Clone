@@ -23,7 +23,7 @@ const FooterColumns = ({ title, links }: FooterColumnsProps) => {
 };
 function Footer() {
   return (
-    <footer className="flex-start footer">
+    <footer className="flex-start footer mt-10">
       <div className="flex items-start flex-col">
         <Image src="/logo-purple.svg" alt="logo" width={200} height={30} />
         <p className="text-start text-sm font-normal mt-5 max-w-xs">

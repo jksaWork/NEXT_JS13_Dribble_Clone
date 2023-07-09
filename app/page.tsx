@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fetchAllProjects } from "@/lib/actions";
 import { ProjectInterface } from "@/common.types";
-import { ProjectCard } from "@/components";
+import { ProjectCard, Categories, LoadMore } from "@/components";
 interface ProjectSerarchInterface {
   projectsSearch: {
     edges: { node: ProjectInterface }[];
@@ -13,8 +13,17 @@ interface ProjectSerarchInterface {
     };
   };
 }
-export default async function Home() {
-  const data = (await fetchAllProjects()) as ProjectSerarchInterface;
+
+type SearchParmasProps = {
+  searchParams: {
+    category?: string;
+    endcursor?: string;
+  };
+};
+export default async function Home({
+  searchParams: { category, endcursor },
+}: SearchParmasProps) {
+  const data = (await fetchAllProjects(category, endcursor)) as ProjectSerarchInterface;
   const projectsToDisplay = data?.projectsSearch?.edges || [];
   console.log(data.projectsSearch, projectsToDisplay);
 
@@ -31,18 +40,26 @@ export default async function Home() {
   }
 
   return (
-    <section className="projects-grid px-3 pt-10 container mx-auto">
-      {projectsToDisplay.map(({ node }, elx) => (
-        <ProjectCard
-          key={node?.id + elx}
-          id={node?.id}
-          image={node?.image}
-          title={node?.title}
-          name={node?.createdBy.name}
-          avatarUrl={node?.createdBy.avatarUrl}
-          userId={node?.createdBy.id}
+    <>
+      <section className="projects-grid px-3 pt-10 container mx-auto">
+        {projectsToDisplay.map(({ node }, elx) => (
+          <ProjectCard
+            key={node?.id + elx}
+            id={node?.id}
+            image={node?.image}
+            title={node?.title}
+            name={node?.createdBy.name}
+            avatarUrl={node?.createdBy.avatarUrl}
+            userId={node?.createdBy.id}
+          />
+        ))}
+        <LoadMore
+          startCursor={data?.projectsSearch?.pageInfo?.startCursor}
+          endCursor={data?.projectsSearch?.pageInfo?.endCursor}
+          hasPreviousPage={data?.projectsSearch?.pageInfo?.hasPreviousPage}
+          hasNextPage={data?.projectsSearch?.pageInfo.hasNextPage}
         />
-      ))}
-    </section>
+      </section>
+    </>
   );
 }

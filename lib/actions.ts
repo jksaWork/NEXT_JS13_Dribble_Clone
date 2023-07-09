@@ -93,8 +93,11 @@ export const CreateProjectAction = async (
   }
 };
 
-export const fetchAllProjects = (category?: string) => {
-  const variables = {};
+export const fetchAllProjects = (category?: string, endcursor?: string) => {
+  const variables = {
+    category,
+    endcursor,
+  };
   return MakeGraphQLClientRequest(fetchprojectquery, variables);
 };
 

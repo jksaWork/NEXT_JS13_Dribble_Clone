@@ -1,4 +1,4 @@
-import { Navbar, Footer, Provider } from "@/components";
+import { Navbar, Footer, Provider, Categories } from "@/components";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -20,6 +20,8 @@ export default function RootLayout({
         {" "}
         <body className={inter.className}>
           <Navbar />
+          <Categories />
+
           <main>
             {children}
             {/*  */}

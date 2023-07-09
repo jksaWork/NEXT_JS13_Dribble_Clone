@@ -14,15 +14,17 @@ async function Navbar() {
   // console.log(seesion);
   return (
     <div className="flexBetween navbar">
-      <Link href="/">
-        <Image src="/logo.svg" alt="logo" width={200} height={30} />
-      </Link>
-      <div className="xl:flex hidden gap-7 text-small">
-        {NavLinks.map((el) => (
-          <Link href={el.href} key={el.key}>
-            {el.text}
-          </Link>
-        ))}
+      <div className="flex gap-5 items-center">
+        <Link href="/">
+          <Image src="/logo.svg" alt="logo" width={200} height={30} />
+        </Link>
+        <div className="xl:flex hidden gap-7 text-small">
+          {NavLinks.map((el) => (
+            <Link href={el.href} key={el.key}>
+              {el.text}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="flex-center">
