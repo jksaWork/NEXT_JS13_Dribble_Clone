@@ -117,3 +117,27 @@ query getUserProjects($id: ID!, $last: Int = 4) {
   }
 }
 `;
+
+export const deleteProjectMutation = `
+mutation DeleteProject($id: ID!) {
+  projectsDelete(by: { id: $id }) {
+    deletedId
+  }
+}
+`;
+
+export const updateProjectMutation = `
+  mutation UpdateProjects($id: ID!, $input: ProjectsUpdateInput!) {
+    projectsUpdate(by: { id: $id }, input: $input) {
+      projects {
+        id
+        title
+        description
+        createdBy {
+          email
+          name
+        }
+      }
+    }
+  }
+`;

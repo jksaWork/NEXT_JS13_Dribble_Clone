@@ -6,6 +6,8 @@ import {
   fetchprojectquery,
   fetchprojectDetailsquery,
   fetchprofileData,
+  deleteProjectMutation,
+  updateProjectMutation,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -102,4 +104,41 @@ export const getPorjcetDetails = (id: string) => {
 
 export const getUserProjects = (id: string) => {
   return MakeGraphQLClientRequest(fetchprofileData, { id });
+};
+
+export const deleteProject = (id: string) => {
+  return MakeGraphQLClientRequest(deleteProjectMutation, { id });
+};
+
+export const EditProjectAction = async (
+  form: ProjectForm,
+  projectId: any,
+  token: string
+) => {
+  function isBase64DataURL(value: string) {
+    const base64Regex = /^data:image\/[a-z]+;base64,/;
+    return base64Regex.test(value);
+  }
+
+  let updatedForm = { ...form, id: projectId };
+
+  const isUploadingNewImage = isBase64DataURL(form.image);
+
+  if (isUploadingNewImage) {
+    const imageUrl = await uploadImage(form.image);
+
+    if (imageUrl.url) {
+      updatedForm = { ...updatedForm, image: imageUrl.url };
+    }
+  }
+
+  client.setHeader("Authorization", `Bearer ${token}`);
+  const { title, description, image } = updatedForm;
+  console.log(image);
+  const variables = {
+    id: projectId,
+    input: { title, description, image },
+  };
+
+  return MakeGraphQLClientRequest(updateProjectMutation, variables);
 };

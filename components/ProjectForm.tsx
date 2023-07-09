@@ -3,45 +3,56 @@ import { Formik, Field, Form } from "formik";
 import CustomFiled from "./CustomFiled";
 import { CreateProjectSchema } from "@/lib/validator";
 import { useRef, useState } from "react";
-import { fetchUserToken, CreateProjectAction } from "@/lib/actions";
+import {
+  fetchUserToken,
+  CreateProjectAction,
+  EditProjectAction,
+} from "@/lib/actions";
 import ReactFileUploader from "./ReactFileUploader";
 import { getServerComponents } from "@/lib/session";
-import { SessionInterface } from "@/common.types";
+import { SessionInterface, ProjectInterface } from "@/common.types";
+import { useRouter, redirect } from "next/navigation";
+type ProjectFormProps = {
+  type: string;
+  session: SessionInterface;
+  project?: ProjectInterface;
+};
 function ProjectForm({
   type,
   session,
+  project,
 }: // SubmitFun,
-{
-  type: string;
-  session: SessionInterface;
-}) {
+ProjectFormProps) {
   // const ref = useRef();
   const [Files, setFiles] = useState("");
   const [loading, setLoading] = useState(false);
-  const project = {
-    title: "",
-    description: "",
-    livesite: "",
-    image: "",
-    githubUrl: "",
-    category: "",
-  }; // Create Form For Your Project
+  // Create Form For Your Project
 
   const SubmitFun = async (values: any) => {
-    setLoading(true);
-    values.image = Files;
-    const token = await fetchUserToken();
-    console.log("Before Create Project Mutaion");
-    const res = await CreateProjectAction(values, session.user?.id, token);
-    // @ts-ignore
-    // const data = await res.json();
-    console.log(token, res, "Token");
-    setLoading(false);
+    try {
+      setLoading(true);
+      values.image = Files;
+      const token = await fetchUserToken();
+      // console.log("Before Create Project Mutaion");
+      let res;
+      if (type == "create") {
+        res = await CreateProjectAction(values, session.user?.id, token);
+      } else {
+        res = await EditProjectAction(values, values.id, token);
+      }
+      // @ts-ignore
+      // const data = await res.json();
+      console.log(token, res, "Token");
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // const SubmitFun = () => {};
   const form = {
     title: project?.title || "",
+    id: project?.id || "",
     description: project?.description || "",
     image: project?.image || "",
     livesite: project?.livesite || "",
