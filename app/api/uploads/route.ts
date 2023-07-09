@@ -12,7 +12,10 @@ cloudinary.config({
 export const POST = async (req: NextRequest) => {
   const { path } = await req.json();
   if (!path) {
-    return NextResponse.json({ message: "Image Path Required" }, 400);
+    return NextResponse.json(
+      { message: "Image Path Required" },
+      { status: 400 }
+    );
   }
   try {
     const options = {
