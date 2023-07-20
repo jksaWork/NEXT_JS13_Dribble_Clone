@@ -1,16 +1,10 @@
-// "use client";
-import { ProjectInterface } from "@/common.types";
 import ProjectForm from "@/components/ProjectForm";
-import { getPorjcetDetails } from "@/lib/actions";
 import { getServerComponents } from "@/lib/session";
-import { useSession } from "next-auth/react";
-import { useRouter, redirect } from "next/navigation";
-import { useEffect } from "react";
+
 interface ParamsType {
   params: { id: string };
 }
-const CreateProject = async ({ params: { id } }: ParamsType) => {
-  const route = useRouter();
+async function Page({ params: { id } }: ParamsType) {
   const session = await getServerComponents();
 
   return (
@@ -19,6 +13,6 @@ const CreateProject = async ({ params: { id } }: ParamsType) => {
       <ProjectForm type="create" session={session!} />
     </div>
   );
-};
+}
 
-export default CreateProject;
+export default Page;
